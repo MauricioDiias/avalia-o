@@ -1,0 +1,63 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  display: flex;
+  gap: 20px;
+}
+
+.stars {
+  /* background-color: #4e88f3; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 2em;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.container {
+  background-color: #fff;
+  width: 300px;
+  border-radius: 5px;
+  padding-top: 40px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+textarea {
+  margin-top: 20px;
+  width: 80%;
+  min-height: 20vh;
+
+}
+
+.modal {
+  min-height: 20vh;
+  background-color: #fff;
+  width: 300px;
+  border-radius: 5px;
+  padding-top: 40px;
+  color: #282c34;
+  position:relative;
+  
+
+}
