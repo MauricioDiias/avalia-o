@@ -1,24 +1,16 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../App.css'
-function Avaliação({
-    comment,
-    comment2,
-    showModal,
-    setShowModal,
-}) {
-const location=useLocation() 
-console.log(location)
-    const closeModal = () => { setShowModal(false); setShowAvaliar(true) };
+function Avaliação({comment,comment2}) {
+    const location = useLocation()
+    console.log(location)
+
     const [showAvaliar, setShowAvaliar] = useState(true)
     const [rating, setRating] = useState(0)
-  const [comment3, setComment3] = useState('');
-
-    const handleClick2 = () => {
-        setShowAvaliar(false);
-        setShowModal(true)
-        console.log({ rating, comment3 });
-    }
+    const [comment3, setComment3] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    
+    const closeModal = () => { setShowModal(false); setShowAvaliar(true) };
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log({ rating, comment2 });
@@ -57,15 +49,12 @@ console.log(location)
                                 onChange={(event) => setComment3(event.target.value)}
                             />
                         </div>
-                        <button className='input' type="submit" onClick={handleClick2}>Enviar</button>
+                        <button className='input' type="submit" onClick={handleSubmit}>Enviar</button>
 
                     </div>
                 )}
 
             </form>
-
-
-            {/**********************************************************/}
             <div>
                 {showModal && (
                     <div className="modal">
@@ -75,7 +64,6 @@ console.log(location)
                     </div>
                 )}
             </div>
-            {/********************************************************* */}
         </>
     );
 }

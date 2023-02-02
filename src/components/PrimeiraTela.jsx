@@ -4,6 +4,7 @@ function PrimeiraTela({ comment, comment2, setComment, setComment2 }) {
     const showFeed=(true)
     const handleClick = () => {
         alert('salvo');
+        console.log({comment,comment2})
     };
     return (<>
         {(showFeed &&
