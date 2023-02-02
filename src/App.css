@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #ffffff;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
@@ -27,13 +27,15 @@
 
 .container {
   background-color: #fff;
-  width: 300px;
+  width: 400px;
   border-radius: 5px;
   padding-top: 40px;
+  border: solid 1px black;
+ padding: 10px;
 }
 
 .input {
-  width: 100%;
+  width: 200px;
   padding: 10px;
   margin-top: 20px;
   border: 1px solid #007bff;
