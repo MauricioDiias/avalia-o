@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { message } from 'antd';
-import '../App.css'
+import '../../App.css'
 function PrimeiraTela({ question_text, feedback_text, setQuestion_text, setFeedback_text }) {
     const showFeed = (true)
 

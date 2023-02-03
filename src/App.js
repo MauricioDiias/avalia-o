@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import Avaliação from './components/Avaliação';
+import Avaliacao from './components/Avaliacao';
 import PrimeiraTela from './components/PrimeiraTela';
 import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom'
 
@@ -20,7 +20,7 @@ function App() {
               setFeedback_text={setFeedback_text} />} />
 
 
-            <Route exact path='/avaliacao' element={<Avaliação
+            <Route exact path='/avaliacao' element={<Avaliacao
               question_text={question_text}
               feedback_text={feedback_text}
               setQuestion_text={setQuestion_text}
