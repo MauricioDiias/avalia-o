@@ -16,7 +16,7 @@ function PrimeiraTela({ question_text, feedback_text, setQuestion_text, setFeedb
         }
         console.log({ question_text, feedback_text }, "comentario");
         axios
-            .post("https://85d1-189-4-107-66.sa.ngrok.io/quiz", { question_text, feedback_text },config)
+            .post("https://4016-189-4-107-66.sa.ngrok.io/quiz", { question_text, feedback_text },config)
             .then((response) => {
                 console.log(response);
                 message.success("Dados enviados com sucesso!");

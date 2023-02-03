@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../App.css";
+import { message } from "antd";
+// import { config } from "react-spring";
 function Avaliacao() {
-  const [ratingConfig, setRatingConfig] = useState();
-
+  const [ratingConfig, setRatingConfig] = useState({});
+  const [showAvaliar, setShowAvaliar] = useState(true);
+  const [rating, setRating] = useState(0);
+  const [feedback_end, setFeedback_end] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => {
+    setShowModal(false);
+    setShowAvaliar(true);
+  };
   const configHeader = {
     headers: {
       "Content-Type": "application/json",
@@ -11,14 +20,41 @@ function Avaliacao() {
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
     },
   };
+  const handleSubmit = (event) => {
+
+    console.log({ rating, feedback_end });
+
+    if (!feedback_end || !rating) {
+      alert("O campos da questão é obrigatorio!");
+      return;
+    }
+    console.log({ feedback_end, rating }, "comentario");
+    axios
+      .post(
+        "https://4016-189-4-107-66.sa.ngrok.io/assessment",
+        { feedback_end, rating },
+        configHeader
+      )
+      .then((response) => {
+        console.log(response);
+        message.success("Dados enviados com sucesso!");
+      })
+      .catch((error) => {
+        console.log(error);
+        message.error("Erro ao enviar dados");
+      });
+  };
+
   async function getRatingConfig() {
     await axios
-      .post("https://4016-189-4-107-66.sa.ngrok.io/quiz/1", configHeader)
+      .post("https://4016-189-4-107-66.sa.ngrok.io/quiz/23", configHeader)
       .then(function (response) {
-        const config = response.data.message[0];
-        console.log("response", response);
-        setRatingConfig(config);
-        console.log(config);
+        if (response.data.message.length > 0) {
+          const retornoDeDados = response.data.message[0];
+          setRatingConfig(retornoDeDados);
+        } else {
+          console.log("ID não encontrado");
+        }
       })
       .catch(function (error) {
         console.log("error", error);
@@ -26,29 +62,15 @@ function Avaliacao() {
   }
   useEffect(() => {
     getRatingConfig();
-  });
-
-  const [showAvaliar, setShowAvaliar] = useState(true);
-  const [rating, setRating] = useState(0);
-  const [comment3, setComment3] = useState("");
-  const [showModal, setShowModal] = useState(false);
-
-  const closeModal = () => {
-    setShowModal(false);
-    setShowAvaliar(true);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // Aqui você pode enviar os dados para o servidor
-  };
+  }, []);
+//   console.log(ratingConfig);
   return (
     <>
       <form onSubmit={handleSubmit}>
         {showAvaliar && (
           <div className="container">
             <div></div>
-            <div style={{ color: "black" }}> {ratingConfig.question_text}</div>
+            <div style={{ color: "black" }}>{ratingConfig.question_text}</div>
             <div className="stars">
               {[1, 2, 3, 4, 5].map((star) => {
                 const status = star <= rating;
@@ -67,13 +89,13 @@ function Avaliacao() {
                 );
               })}
             </div>
-            <div style={{ color: "black" }}></div>
+            <div style={{ color: "black" }}>{ratingConfig.feedback_text}</div>
             <div>
               <textarea
-                id="comment3"
-                value={comment3}
+                id="feedback_end"
+                value={feedback_end}
                 placeholder="Descreva a sua experiência!"
-                onChange={(event) => setComment3(event.target.value)}
+                onChange={(event) => setFeedback_end(event.target.value)}
               />
             </div>
             <button className="input" type="submit" onClick={handleSubmit}>
