@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "../../App.css";
 import { message } from "antd";
+import { getRatingConfig, postAssessment } from "../../api";
 // import { config } from "react-spring";
 function Avaliacao() {
   const [ratingConfig, setRatingConfig] = useState({});
@@ -13,57 +13,25 @@ function Avaliacao() {
     setShowModal(false);
     setShowAvaliar(true);
   };
-  const configHeader = {
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
-    },
-  };
-  const handleSubmit = (event) => {
 
-    console.log({ rating, feedback_end });
-
+  async function handleSubmit(event) {
     if (!feedback_end || !rating) {
       alert("O campos da questão é obrigatorio!");
       return;
     }
-    console.log({ feedback_end, rating }, "comentario");
-    axios
-      .post(
-        "https://4016-189-4-107-66.sa.ngrok.io/assessment",
-        { feedback_end, rating },
-        configHeader
-      )
-      .then((response) => {
-        console.log(response);
-        message.success("Dados enviados com sucesso!");
-      })
-      .catch((error) => {
-        console.log(error);
-        message.error("Erro ao enviar dados");
-      });
-  };
-
-  async function getRatingConfig() {
-    await axios
-      .post("https://4016-189-4-107-66.sa.ngrok.io/quiz/23", configHeader)
-      .then(function (response) {
-        if (response.data.message.length > 0) {
-          const retornoDeDados = response.data.message[0];
-          setRatingConfig(retornoDeDados);
-        } else {
-          console.log("ID não encontrado");
-        }
-      })
-      .catch(function (error) {
-        console.log("error", error);
-      });
+    try {
+      const response = await postAssessment(rating, feedback_end);
+      message.success("Dados enviados com sucesso!");
+    } catch (error) {
+      console.log(error);
+      message.error("Erro ao enviar dados");
+    }
   }
+
   useEffect(() => {
-    getRatingConfig();
+    getRatingConfig().then((ratingConfig) => setRatingConfig(ratingConfig));
   }, []);
-//   console.log(ratingConfig);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
